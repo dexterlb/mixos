@@ -9,6 +9,9 @@
     deploy-o-matic.url = "github:dexterlb/deploy-o-matic";
     deploy-o-matic.inputs.nixpkgs.follows = "nixpkgs";
 
+    fazantix.url = "github:FOSDEM/video-fazantix/nix-web-ui";
+    fazantix.inputs.nixpkgs.follows = "nixpkgs";
+
     nixos-hardware.url = "github:NixOS/nixos-hardware";
   };
 
@@ -18,7 +21,9 @@
         templatesDir = ./templates;
         overlaysDir = ./overlays;
         moduleArgs = { inherit inputs; };
-        nixpkgsConfig = (import ./nixpkgs-global-config.nix);
+        nixpkgsConfig = (import ./nixpkgs-global-config.nix) // {
+          flake-inputs = inputs;
+        };
       };
 
       lib = nixpkgs.lib;
