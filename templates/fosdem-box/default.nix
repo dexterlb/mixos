@@ -8,6 +8,7 @@
     ../../common/networking-dhcp.nix
     ../../common/audio-config.nix
     ../../common/gpu-support/intel.nix
+    ../../common/gpu-support/force_1080p30.nix
     ../../common/fazantix
     ../../common/fosdem-box-status
     ../../common/fosdem-audio-board

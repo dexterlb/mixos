@@ -231,8 +231,8 @@
     projector = {
       type = "window";
       frames = {
-        width = 1280;
-        height = 720;
+        width = 1920;
+        height = 1080;
       };
       default_scene = "default";
       transition_time_ms = 1500;
