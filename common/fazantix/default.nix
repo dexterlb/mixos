@@ -18,13 +18,17 @@ let
 in {
   options = {
     programs.fazantix.config = lib.mkOption {
-      type = lib.types.raw; # accepts any nix expression/value
+      type = lib.types.raw; # fixme, validate config properly
       default = ((import ./example_config.nix) { inherit pkgs; });
       description = "Fazantix configuration";
     };
   };
 
   config = {
+    networking.firewall.allowedTCPPorts = [
+      (lib.toIntBase10 (builtins.elemAt
+        (lib.splitString ":" config.programs.fazantix.config.api.bind) 1))
+    ];
     home-manager.users.human = {
       imports = [ ];
 
