@@ -52,16 +52,16 @@
         "utils": "utils_2"
       },
       "locked": {
-        "lastModified": 1762633455,
-        "narHash": "sha256-wvbq4Tx+yR5jQ/SgFh+NGHS9iOT07g/bz/OZHRQD2w8=",
+        "lastModified": 1769521607,
+        "narHash": "sha256-tR30FDnpeItgLUdP8gsNKJ1N2p3KqxipruXFVmjQd04=",
         "owner": "FOSDEM",
         "repo": "video-fazantix",
-        "rev": "2bc02247e8d496b82136557ad11c4b4f7a0b59fe",
+        "rev": "b3e94f200d65fc88cd2d6d327a7832476b33add2",
         "type": "github"
       },
       "original": {
         "owner": "FOSDEM",
-        "ref": "nix-web-ui",
+        "ref": "adjustable_framerate",
         "repo": "video-fazantix",
         "type": "github"
       }

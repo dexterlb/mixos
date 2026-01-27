@@ -244,4 +244,5 @@
   };
   fallback_colour = "#ebac54";
   bg_colour = "#54aceb";
+  base_framerate = 30;
 }

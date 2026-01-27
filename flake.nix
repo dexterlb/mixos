@@ -9,7 +9,7 @@
     deploy-o-matic.url = "github:dexterlb/deploy-o-matic";
     deploy-o-matic.inputs.nixpkgs.follows = "nixpkgs";
 
-    fazantix.url = "github:FOSDEM/video-fazantix/nix-web-ui";
+    fazantix.url = "github:FOSDEM/video-fazantix/adjustable_framerate";
     fazantix.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware";
