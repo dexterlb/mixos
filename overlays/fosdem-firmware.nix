@@ -1,22 +1,25 @@
 self: super:
 let
   version = "051e9154f50d9d416ca79d81b5be7c5f2131b14f";
-  src = (super.fetchFromGitHub {
+  src = super.fetchFromGitHub {
     owner = "fosdem";
     repo = "video";
     rev = "${version}";
     hash = "sha256-hJcnyITCv1a+mIj+3S3B1yHv038+ViLE568+KyN0Wog=";
     fetchSubmodules = true;
-  }).overrideAttrs {
-    GIT_CONFIG_COUNT = 1;
-    GIT_CONFIG_KEY_0 = "url.https://github.com/.insteadOf";
-    GIT_CONFIG_VALUE_0 = "git@github.com:";
+    preFetch = ''
+      # can't clone using ssh
+      # https://github.com/jg-rp/python-jsonpath/pull/122
+      export GIT_CONFIG_COUNT=1
+      export GIT_CONFIG_KEY_0=url.https://github.com/.insteadOf
+      export GIT_CONFIG_VALUE_0=git@github.com:
+    '';
   };
 in {
   fosdem-firmware-audio-brd = super.stdenv.mkDerivation {
     inherit version src;
     pname = "fosdem-firmware-audio-brd";
-    nativeBuildInputs = [ super.cmake super.gcc-arm-embedded ];
+    nativeBuildInputs = [ super.cmake super.gcc-arm-embedded-14 ];
     sourceRoot = "${src.name}/hardware/firmware/audio_board";
     installPhase = ''
       mkdir -p $out
