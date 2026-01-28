@@ -17,7 +17,7 @@ let
 in {
   imports = [ inputs.home-manager.nixosModules.home-manager ];
 
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.require-sigs = false;
@@ -54,7 +54,10 @@ in {
       usbutils
       lshw
       usbtop
-    ] ++ (if pkgs.system == "x86_64-linux" then [ pcm ] else [ ]);
+    ] ++ (if pkgs.stdenv.hostPlatform.system == "x86_64-linux" then
+      [ pcm ]
+    else
+      [ ]);
 
   time.timeZone = "Europe/Sofia";
 
@@ -97,8 +100,6 @@ in {
   };
 
   services.getty.autologinUser = "human";
-
-  programs.sway.enable = true;
 
   programs.zsh.enable = true;
   programs.zsh.interactiveShellInit = ''

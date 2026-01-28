@@ -132,6 +132,8 @@ in {
   };
 
   config = {
+    programs.sway.enable = true;
+
     home-manager.users.human = {
       imports = [ ./waybar.nix ./shanomenu.nix ];
 
