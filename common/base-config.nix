@@ -75,7 +75,7 @@ in {
   users.users.human = {
     home = "/home/human";
     description = "human";
-    extraGroups = [ "wheel" "video" "audio" "power" "adm" ];
+    extraGroups = [ "wheel" "video" "audio" "power" "adm" "dialout" ];
     isSystemUser = false;
     isNormalUser = true;
     group = "human";

@@ -11,4 +11,6 @@
 
     LABEL="fosdem_audio_end"
   '';
+  services.udev.packages = [ pkgs.teensy-udev-rules ];
+  environment.systemPackages = [ pkgs.fosdem-firmware-audio-brd-flash ];
 }
