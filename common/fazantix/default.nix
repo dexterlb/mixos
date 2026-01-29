@@ -32,7 +32,13 @@ in {
     home-manager.users.human = {
       imports = [ ];
 
-      home.packages = with pkgs; [ cage fazantix jack-example-tools ffmpeg ];
+      home.packages = with pkgs; [
+        cage
+        fazantix
+        jack-example-tools
+        alsa-utils
+        ffmpeg
+      ];
 
       home.file.".zprofile".text = ''
         # Auto-start cage on first VT if not already under Wayland
