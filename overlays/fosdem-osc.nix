@@ -41,15 +41,15 @@ in rec {
     pname = "fosdem-mixerapi";
     sourceRoot = "${src.name}/api";
     pyproject = true;
-    build-system = [
-      py.setuptools
+    build-system = [ py.setuptools ];
+    dependencies = [
+      fosdem-osc-lib
       py.click
       py.fastapi
       py.uvicorn
       py.websockets
       py.requests
     ];
-    dependencies = [ fosdem-osc-lib ];
   };
   fosdem-osc-proxy = super.buildGoModule {
     src = gosrc;
