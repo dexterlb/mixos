@@ -218,7 +218,7 @@
             -analyzeduration 0 \
             -f rawvideo -video_size ''${SIZE} \
             -pixel_format rgba -framerate ''${RATE} -re -i - \
-            -itsoffset 0.16 -f alsa -sample_rate 48000 -channels 2 -i hw:3 \
+            -itsoffset 0.16 -f alsa -sample_rate 48000 -channels 2 -i hw:0 \
             -threads:0 0 \
             -filter_complex "[1:a] volume=volume=0dB [ain]; [0:v] format=nv12,hwupload [vout]" \
             -map '[vout]:0' \
