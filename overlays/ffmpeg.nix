@@ -8,6 +8,7 @@ self: super: {
         withCuda = false;
         withCudaLLVM = false;
         withCudaNVCC = false;
+        withJack = true;
 
         inherit (super.darwin) xcode;
         inherit (super.cudaPackages) cuda_cudart cuda_nvcc libnpp;
