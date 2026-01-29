@@ -18,4 +18,17 @@
     pkgs.fosdem-mixerapi
     pkgs.fosdem-osc-proxy
   ];
+
+  systemd.services.osc-proxy = {
+    enable = true;
+    description = "FOSDEM audio OSC proxy";
+    serviceConfig = {
+      Type = "simple";
+      ExecStart =
+        "${pkgs.fosdem-osc-proxy}/bin/osc-proxy-go -device /dev/tty_fosdem_audio_ctl";
+      User = "human";
+      Group = "human";
+    };
+    wantedBy = [ "multi-user.target" ];
+  };
 }

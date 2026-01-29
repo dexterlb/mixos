@@ -1,11 +1,11 @@
 self: super:
 let
-  version = "5d607f80ad27c2d09e437c22fd498f5ef049aca5";
+  version = "c3e27384bd755dc42b9f55de872cc18c98e273a1";
   src = super.fetchFromGitHub {
     owner = "fosdem";
     repo = "video-amixcontrol";
     rev = "${version}";
-    hash = "sha256-6KD62eclas+BE5dCwO0brVD8q8P4KeUQFbU5KVsj7Jk=";
+    hash = "sha256-JvkA4YohcjEE9m3RQf5u3P0fEylZqpL8NbPby0qFnM8=";
     fetchSubmodules = true;
   };
   py = self.python3Packages;
@@ -19,26 +19,6 @@ let
     fetchSubmodules = true;
   };
 in rec {
-  # override version of `click` because `click-repl` doesn't work with the new one
-  # https://github.com/click-contrib/click-repl/issues/128
-  python3 = super.python3.override {
-    packageOverrides = pythonSelf: pythonSuper: {
-      click = pythonSuper.click.overridePythonAttrs (oldAttrs: rec {
-        version = "8.1.8";
-        src = pythonSelf.fetchPypi {
-          pname = "click";
-          inherit version;
-          sha256 = "sha256-7VPJ2JkNg8Kifermjk7jN0c/YzDAQKMdQiXJV00WCWo=";
-        };
-        pyproject = true;
-        build-system = [ pythonSelf.setuptools ];
-        nativeBuildInputs = (oldAttrs.nativeBuildInputs or [ ])
-          ++ [ pythonSelf.setuptools pythonSelf.flit-core ];
-      });
-    };
-  };
-  python3Packages = self.python3.pkgs;
-
   fosdem-osc-lib = py.buildPythonPackage {
     inherit src version;
     pname = "fosdem-osc-lib";
@@ -54,7 +34,7 @@ in rec {
     pyproject = true;
     build-system = [ py.setuptools ];
     dependencies =
-      [ fosdem-osc-lib py.click py.click-repl py.tabulate py.pyserial ];
+      [ fosdem-osc-lib py.click py.prompt-toolkit py.tabulate py.pyserial ];
   };
   fosdem-mixerapi = py.buildPythonPackage {
     inherit src version;
