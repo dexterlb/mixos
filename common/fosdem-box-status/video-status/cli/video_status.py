@@ -7,7 +7,6 @@ import re
 import signal
 import subprocess
 import sys
-import syslog
 import time
 
 WHITE = 255,255,255
@@ -152,7 +151,7 @@ def output_image():
 		l = len(data)
 		expected = img_x * img_y * 2
 		if l != expected:
-			syslog(f"/tmp/picture.raw has size {l} bytes expected {expected} bytes")
+			sys.stderr.write(f"/tmp/picture.raw has size {l} bytes expected {expected} bytes\n")
 			return
 	except:
 		return
@@ -210,22 +209,48 @@ def update_switch_state():
 
 	for i in range(0,5):
 		if new_state[i] != switch_state[i]:
-			syslog.syslog(f"Port {i} state change {switch_state[i]} -> {new_state[i]}")
+			sys.stderr.write(f"Port {i} state change {switch_state[i]} -> {new_state[i]}\n")
 			switch_state[i] = new_state[i]
 
+diag = ''
+
+def update_diag():
+    global diag
+    newdiag = ''
+    with get_serial() as port:
+        port.write(b"status\n")
+        while True:
+            line = port.readline().decode("utf-8").strip()
+            if re.match(r"^(ok|fail) ", line):
+                break
+            newdiag += "\n" + line
+
+    if diag != newdiag:
+        diag = newdiag
+    else:
+        try:
+            with open("/tmp/status.tmp", "w") as f:
+                f.write(diag)
+
+            os.rename("/tmp/status.tmp", "/tmp/status.txt")
+        except:
+            pass
+
 def main():
+	signal.signal(signal.SIGHUP, signal_handler)
 	counter = 0
 
 	os.system("clear")
-	syslog.openlog("video-status")
 	update_switch_state()
 	start_chargers()
 
 	while True:
 		info = update_sysinfo()
 		update_switch_state()
+		update_diag()
 		output_terminal(info)
-		if counter % 3 == 0:
+		# if counter % 3 == 0:
+		if True:
 			output_serial_display(info)
 		else:
 			output_image()
@@ -365,7 +390,8 @@ def update_sysinfo():
 		ret.append(stateEntry(fp.read().rstrip()))
 		fp.close()
 	else:
-		ret.append(stateEntry("revision not found"), BAD)
+		ret.append(stateEntry("fazant fazant fazant", CHECK))
+		# ret.append(stateEntry("revision not found", BAD))
 
 	return ret
 
@@ -375,6 +401,6 @@ def signal_handler(signum, frame):
 	pass
 
 if __name__=="__main__":
-	signal.signal(signal.SIGHUP, signal_handler)
 	main()
 
+# vim: noai:ts=4:sw=4:noexpandtab

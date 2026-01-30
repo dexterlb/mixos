@@ -7,7 +7,7 @@ let
     image = { format = "raw"; };
     moduleArgs = { inherit hostname; };
     deploy = {
-      hostname = "100.64.0.11";
+      hostname = "185.175.218.181";
       sshUser = "human";
 
       remoteBuild = false;
