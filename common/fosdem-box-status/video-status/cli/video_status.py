@@ -298,26 +298,32 @@ def update_sysinfo():
 	# height: 1200
 	# signal: no
 
-	try:
-		signaldata = json.loads(open('/tmp/ms213x-status', 'r').read())
-		if signaldata['signal'] == 'yes':
-			signal = True
-			resX = signaldata['width']
-			resY = signaldata['height']
-			resolution = f"{resX}x{resY}"
-		else:
+	for i, capt_name in enumerate(('cam', 'slides')):
+		filename = f'/tmp/video-status-{capt_name}.json'
+		try:
+			signaldata = json.loads(open(filename, 'r').read())
+			if signaldata['signal'] == 'yes':
+				signal = True
+				resX = signaldata['width']
+				resY = signaldata['height']
+				resolution = f"{resX}x{resY}"
+			else:
+				signal = False
+		except Exception as e:
+	#		print("exception")
+	#		print(e)
 			signal = False
-	except Exception as e:
-#		print("exception")
-#		print(e)
-		signal = False
-	#print(signaldata)
-	if not os.path.isfile("/tmp/ms213x-status"):
-		ret.append(stateEntry("NO CAPTURE DEVICE", BAD))
-	elif signal:
-		ret.append(stateEntry(f"SIGNAL {resolution}"))
-	else:
-		ret.append(stateEntry("NO SIGNAL", BAD))
+		#print(signaldata)
+		if i != 0:
+			ret.append(stateEntry(f', ', nl=False))
+		if not os.path.isfile(filename):
+			ret.append(stateEntry(f'{capt_name} NOCAP', BAD, nl=False))
+		elif signal:
+			ret.append(stateEntry(f"{capt_name} {resolution}", nl=False))
+		else:
+			ret.append(stateEntry(f"{capt_name} NOSIG", BAD, nl=False))
+
+	ret.append(stateEntry(''))
 
 
 	ret.append(stateEntry(f"host: {hostname} "))

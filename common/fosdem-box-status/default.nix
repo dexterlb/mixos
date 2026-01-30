@@ -22,7 +22,7 @@ let
     name = "video-capture-status-${name}";
     value = let
       script = pkgs.writeShellApplication {
-        name = "status";
+        name = "video-status-${name}";
         runtimeInputs = [ pkgs.coreutils ];
         text = ''
           ${pkgs.fosdem-ms213x-status}/bin/ms213x-status \
@@ -36,7 +36,7 @@ let
       description = "Capture card status (${name})";
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${script}/bin/status";
+        ExecStart = "${script}/bin/video-status-${name}";
         Restart = "always";
       };
       wantedBy = [ "multi-user.target" ];
