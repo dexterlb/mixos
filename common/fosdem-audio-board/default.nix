@@ -40,6 +40,7 @@ in {
         "${pkgs.fosdem-osc-proxy}/bin/osc-proxy-go -device /dev/tty_fosdem_audio_ctl";
       User = "human";
       Group = "human";
+      Restart = "always";
     };
     wantedBy = [ "multi-user.target" ];
   };
