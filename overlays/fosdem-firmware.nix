@@ -1,11 +1,11 @@
 self: super:
 let
-  version = "051e9154f50d9d416ca79d81b5be7c5f2131b14f";
+  version = "33c5ec852816db2247e0b7c9b9e9ab7ce6f56c4c";
   src = super.fetchFromGitHub {
     owner = "fosdem";
     repo = "video";
     rev = "${version}";
-    hash = "sha256-hJcnyITCv1a+mIj+3S3B1yHv038+ViLE568+KyN0Wog=";
+    hash = "sha256-OUsRUgAwlckjZd//0mMOaJeCMTRvDvvQXXxhZQqPzMw=";
     fetchSubmodules = true;
     preFetch = ''
       # can't clone using ssh
