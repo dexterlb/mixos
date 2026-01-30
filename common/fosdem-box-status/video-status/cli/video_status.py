@@ -320,15 +320,7 @@ def update_sysinfo():
 		ret.append(stateEntry("NO SIGNAL", BAD))
 
 
-	ret.append(stateEntry(f"host: {hostname} ", nl=False))
-
-	rec_info = os.popen('systemctl show video-recorder --property=ActiveState').read()
-	if re.search('^ActiveState=active', rec_info) == None:
-		ret.append(stateEntry(f"rec: paused ", BAD))
-	else:
-		ret.append(stateEntry(f"rec: RECORD ", GOOD))
-
-
+	ret.append(stateEntry(f"host: {hostname} "))
 
 	portnames = [ "IN", "01", "02", "03", "04"]
 	try:
