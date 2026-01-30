@@ -8,6 +8,7 @@ import signal
 import subprocess
 import sys
 import time
+import requests
 
 WHITE = 255,255,255
 BLACK = 0,0,0
@@ -257,6 +258,9 @@ def main():
 		counter = (counter + 1) % 256
 		time.sleep(1)
 
+# fixme: global variables bad
+slides_connected = False
+
 def update_sysinfo():
 	ret = []
 	# Hostname
@@ -298,6 +302,8 @@ def update_sysinfo():
 	# height: 1200
 	# signal: no
 
+	global slides_connected
+	new_slides_connected = False
 	for i, capt_name in enumerate(('cam', 'slides')):
 		filename = f'/tmp/video-status-{capt_name}.json'
 		try:
@@ -320,6 +326,8 @@ def update_sysinfo():
 			ret.append(stateEntry(f'{capt_name} NOCAP', BAD, nl=False))
 		elif signal:
 			ret.append(stateEntry(f"{capt_name} {resolution}", nl=False))
+			if capt_name == 'cam':
+				new_slides_connected = True
 		else:
 			ret.append(stateEntry(f"{capt_name} NOSIG", BAD, nl=False))
 
@@ -391,7 +399,22 @@ def update_sysinfo():
 		ret.append(stateEntry("fazant fazant fazant", CHECK))
 		# ret.append(stateEntry("revision not found", BAD))
 
+	if slides_connected != new_slides_connected:
+		update_slides_connected(new_slides_connected)
+		slides_connected = new_slides_connected
+
 	return ret
+
+def update_slides_connected(state):
+	try:
+		if state:
+			requests.get('http://localhost:8000/api/scene/projector/full-slides')
+			requests.get('http://localhost:8000/api/scene/stream/slides-over-cam')
+		else:
+			requests.get('http://localhost:8000/api/scene/projector/break')
+			requests.get('http://localhost:8000/api/scene/stream/break')
+	except Exception as e:
+		print("exception")
 
 def signal_handler(signum, frame):
 	# We need something to catch signals since systemd sends a SIGHUP, if we

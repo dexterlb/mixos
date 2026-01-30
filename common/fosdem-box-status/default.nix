@@ -11,6 +11,7 @@ let
     build-system = [ py.setuptools ];
     dependencies = [
       py.pyserial
+      py.requests
       pkgs.moreutils
       pkgs.lm_sensors
       pkgs.hostname
