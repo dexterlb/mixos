@@ -1,10 +1,16 @@
 { pkgs, ... }: {
+  imports = [ ../../common/assets/asset-downloader.nix ];
+  mixos.assets = [{
+    url = "https://rnd.qtrp.org/fazant-2026.png";
+    sha256 = "sha256-whRLw1SziDydlDdhGNl0NekC2Ora0CQe0pqDYH3Re7Y=";
+    name = "fazant-2026.png";
+  }];
   networking.firewall.allowedTCPPorts = [ 9899 ];
   programs.fazantix.config = {
     sources = {
       background = {
         type = "image";
-        path = "${pkgs.fazantix-sample-images}/background.png";
+        path = "/home/human/assets/fazant-2026.png";
       };
       camera = {
         type = "v4l";
@@ -32,6 +38,18 @@
       };
     };
     scenes = {
+      break = {
+        tag = "brk";
+        layers = [{
+          source = "background";
+          transform = {
+            x = 0;
+            y = 0;
+            scale = 1;
+            opacity = 1;
+          };
+        }];
+      };
       cam-over-slides = {
         layers = [
           {
@@ -46,9 +64,9 @@
           {
             source = "camera";
             transform = {
-              left = -4.0e-2;
-              top = -4.0e-2;
-              scale = 0.79;
+              left = -2.0e-2;
+              top = -2.0e-2;
+              scale = 0.8;
               opacity = 1;
             };
             warp = {
@@ -61,8 +79,8 @@
           {
             source = "slides";
             transform = {
-              right = -4.0e-2;
-              bottom = -0.1;
+              right = -2.0e-2;
+              bottom = -2.0e-2;
               scale = 0.25;
               opacity = 1;
             };
@@ -89,9 +107,9 @@
           {
             source = "slides";
             transform = {
-              left = -4.0e-2;
-              top = -4.0e-2;
-              scale = 0.79;
+              left = -2.0e-2;
+              top = -2.0e-2;
+              scale = 0.8;
               opacity = 1;
             };
             warp = {
@@ -104,8 +122,8 @@
           {
             source = "camera";
             transform = {
-              right = -4.0e-2;
-              bottom = -0.1;
+              right = -2.0e-2;
+              bottom = -2.0e-2;
               scale = 0.25;
               opacity = 1;
             };

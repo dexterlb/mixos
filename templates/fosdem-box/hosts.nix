@@ -7,7 +7,7 @@ let
     image = { format = "raw"; };
     moduleArgs = { inherit hostname; };
     deploy = {
-      hostname = "${hostname}.d.qtrp.org";
+      hostname = "100.64.0.11";
       sshUser = "human";
 
       remoteBuild = false;
