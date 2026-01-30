@@ -56,4 +56,6 @@ in {
     };
     wantedBy = [ "multi-user.target" ];
   };
+
+  networking.firewall.allowedTCPPorts = [ 5080 ]; # mixerapi
 }
