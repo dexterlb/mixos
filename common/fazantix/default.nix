@@ -43,7 +43,9 @@ in {
       home.file.".zprofile".text = ''
         # Auto-start cage on first VT if not already under Wayland
         if [ -z "''${WAYLAND_DISPLAY}" ] && [ "''${XDG_VTNR: -0}" -eq 1 ]; then
-          cage -d -- bash -c 'fazantix ${fazantix-config-file}/fazantix-config.json &> /tmp/fazantix.log'
+          while sleep 0.5; do
+            cage -d -- bash -c 'fazantix ${fazantix-config-file}/fazantix-config.json &> /tmp/fazantix-$(date +"%Y-%m-%d-%H-%M-%S").log'
+          done
         fi
       '';
     };
