@@ -249,7 +249,7 @@ def main():
 		info = update_sysinfo()
 		update_switch_state()
 		update_diag()
-		output_terminal(info)
+		# output_terminal(info)
 		# if counter % 3 == 0:
 		if True:
 			output_serial_display(info)
@@ -323,13 +323,13 @@ def update_sysinfo():
 		if i != 0:
 			ret.append(stateEntry(f', ', nl=False))
 		if not os.path.isfile(filename):
-			ret.append(stateEntry(f'{capt_name} NOCAP', BAD, nl=False))
+			ret.append(stateEntry(f'{capt_name[0]}: NOCAP', BAD, nl=False))
 		elif signal:
-			ret.append(stateEntry(f"{capt_name} {resolution}", nl=False))
-			if capt_name == 'cam':
+			ret.append(stateEntry(f"{capt_name[0]}: {resolution}", nl=False))
+			if capt_name == 'slides':
 				new_slides_connected = True
 		else:
-			ret.append(stateEntry(f"{capt_name} NOSIG", BAD, nl=False))
+			ret.append(stateEntry(f"{capt_name[0]}: NOSIG", BAD, nl=False))
 
 	ret.append(stateEntry(''))
 
@@ -406,6 +406,7 @@ def update_sysinfo():
 	return ret
 
 def update_slides_connected(state):
+	print(f'slides connected: {state}')
 	try:
 		if state:
 			requests.get('http://localhost:8000/api/scene/projector/full-slides')

@@ -29,6 +29,7 @@ in {
     pkgs.fosdem-mixercli
     pkgs.fosdem-mixerapi
     pkgs.fosdem-osc-proxy
+    pkgs.picocom
   ];
 
   systemd.services.osc-proxy = {
